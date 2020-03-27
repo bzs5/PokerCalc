@@ -32,7 +32,7 @@ public class Hand implements Comparable<Object> {
     public String toString() {
         String result= "";
         for (Card c : cards) {
-            result+= c.toString();
+            result+= c.toString() + " ";
         }
         result+= type;
         return result;

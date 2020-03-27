@@ -1,6 +1,7 @@
 package poker;
+
 public enum Rank {
-    LO_ACE,
+    LO_ACE,// Unused
     TWO,
     THREE,
     FOUR,

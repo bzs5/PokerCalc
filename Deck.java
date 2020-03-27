@@ -58,7 +58,7 @@ public class Deck {
     public String toString() {
         String result= "";
         for (Card c : cards) {
-            result+= c.toString();
+            result+= c.toString() + " ";
         }
         return result;
     }

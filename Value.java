@@ -5,10 +5,23 @@ public class Value {
     public Rank rank;
 
     @Override
+    public int hashCode() {
+        final int prime= 5;
+        int result= 1;
+        result= prime * result + numval;
+        result= prime * result + (rank == null ? 0 : rank.hashCode());
+        return result;
+    }
+
+    @Override
     public boolean equals(Object obj) {
-        assert obj.getClass() == this.getClass();
-        Value v= (Value) obj;
-        return v.numval == numval;
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        Value other= (Value) obj;
+        if (numval != other.numval) return false;
+        if (rank != other.rank) return false;
+        return true;
     }
 
     public Value(int v) {
@@ -27,7 +40,7 @@ public class Value {
     public Rank findr(int v) {
         Rank r;
         switch (v) {
-        case 1:
+        case 1: // Unused
             r= Rank.LO_ACE;
             break;
         case 2:
