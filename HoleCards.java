@@ -4,9 +4,10 @@ import java.util.Arrays;
 
 public class HoleCards implements Comparable<Object> {
 
-    Card[] cards= new Card[2];
+    private final Card[] cards;
 
     public HoleCards(Card c1, Card c2) {
+        cards= new Card[2];
         if (c1.compareTo(c2) == 1) {
             cards[0]= c1;
             cards[1]= c2;
@@ -22,7 +23,7 @@ public class HoleCards implements Comparable<Object> {
     }
 
     public Card[] getCards() {
-        return cards;
+        return cards.clone();
     }
 
     @Override

@@ -4,48 +4,47 @@ import java.util.Arrays;
 
 public class Hand implements Comparable<Object> {
 
-    public HandType type;
+    private final HandType TYPE;
 
-    public long handValue;
+    private final long HANDVALUE;
 
-    public Card[] cards;
+    private final Card[] CARDS;
 
     public Hand(Card[] c) {
-        if (c.length == 5) {
-            cards= c;
-            handValue= valueHand(cards);
-        }
-        if (c.length == 6) {
+        int len= c.length;
+        if (len == 5) {
+            CARDS= c;
+            HANDVALUE= valueHand(CARDS);
+        } else if (len == 6) {
             Hand newHand= findBestHandSix(c);
-            handValue= newHand.getHandValue();
-            cards= newHand.getCards();
-        }
-        if (c.length == 7) {
+            HANDVALUE= newHand.getHandValue();
+            CARDS= newHand.getCards();
+        } else {// len == 7
             Hand newHand= findBestHandSeven(c);
-            handValue= newHand.getHandValue();
-            cards= newHand.getCards();
+            HANDVALUE= newHand.getHandValue();
+            CARDS= newHand.getCards();
         }
-        type= characterize(handValue);
+        TYPE= HandType.values()[(int) (HANDVALUE / 10000000000L)];
     }
 
     @Override
     public String toString() {
-        String result= "";
-        for (Card c : cards) {
+        String result= "(";
+        for (Card c : CARDS) {
             result+= c.toString() + " ";
         }
-        result+= type;
+        result+= "), " + TYPE.name().replace("_", " ");
         return result;
     }
 
     @Override
     public int compareTo(Object obj) {
         assert obj.getClass() == this.getClass();
-        Hand h= (Hand) obj;
-        long hval= h.getHandValue();
-        long ourval= handValue;
-        if (ourval == hval) { return 0; }
-        if (ourval < hval)
+        Hand other= (Hand) obj;
+        long otherval= other.getHandValue();
+        long ourval= HANDVALUE;
+        if (ourval == otherval) { return 0; }
+        if (ourval < otherval)
             return -1;
         return 1;
     }
@@ -118,7 +117,7 @@ public class Hand implements Comparable<Object> {
                 break;
             }
             // Put the values of the cards into an array
-            vals[count]= c.getValue().getNumval();
+            vals[count]= c.getValue();
             count++ ;
         }
         // Sort into ascending order. This will simplify everything from here onwards.
@@ -165,14 +164,14 @@ public class Hand implements Comparable<Object> {
                 // the trips. This lets us find the value easily.
             }
         }
-        int[] checkLow= { 2, 3, 4, 5, 14 };// Since ace can also be the low card in a straight, we
-                                           // need to see if this is the case.
+        int[] wheel= { 2, 3, 4, 5, 14 };// Since ace can also be the low card in a straight, we
+                                        // need to see if this is the case.
         // This is the only hardcoded list of values, as it saves time compared to other ways of
         // checking.
         // We still need to see if it's a straight or a straight flush.
         // This is done after quads and full house, because there's no overlap between those--if we
         // do have the A2345 straight, it will never be triggered as a full house or quads anyway.
-        if (numPairs == 0 && Arrays.equals(vals, checkLow)) {
+        if (numPairs == 0 && Arrays.equals(vals, wheel)) {
             return flush ? 80000000005L : 40000000005L;
         }
         // Due to ordering of hands, we handle the other flushes and straights now
@@ -225,25 +224,11 @@ public class Hand implements Comparable<Object> {
             vals[1] * 100 + vals[0];
     }
 
-    public static HandType characterize(long hv) {
-        if (hv < 10000000000L) { return HandType.HIGH_CARD; }
-        if (hv < 20000000000L) { return HandType.PAIR; }
-        if (hv < 30000000000L) { return HandType.TWO_PAIR; }
-        if (hv < 40000000000L) { return HandType.THREE_OF_A_KIND; }
-        if (hv < 50000000000L) { return HandType.STRAIGHT; }
-        if (hv < 60000000000L) { return HandType.FLUSH; }
-        if (hv < 70000000000L) { return HandType.FULL_HOUSE; }
-        if (hv < 80000000000L) { return HandType.FOUR_OF_A_KIND; }
-        if (hv < 90000000000L) { return HandType.STRAIGHT_FLUSH; }
-        return HandType.ROYAL_FLUSH;
-
-    }
-
     public long getHandValue() {
-        return handValue;
+        return HANDVALUE;
     }
 
     public Card[] getCards() {
-        return cards;
+        return CARDS.clone();
     }
 }

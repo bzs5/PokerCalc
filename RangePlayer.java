@@ -2,9 +2,9 @@ package poker;
 
 public class RangePlayer extends Range implements SimulatedPlayer {
 
-    int wins= 0;
+    private int wins= 0;
 
-    int ties= 0;
+    private int ties= 0;
 
     public RangePlayer() {
         super();
@@ -32,6 +32,16 @@ public class RangePlayer extends Range implements SimulatedPlayer {
     public void addPlayer(Player p) {
         wins+= p.getWins();
         ties+= p.getTies();
+    }
+
+    @Override
+    public void addWins() {
+        wins++ ;
+    }
+
+    @Override
+    public void addTies() {
+        ties++ ;
     }
 
 }

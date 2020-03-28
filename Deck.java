@@ -5,12 +5,12 @@ import java.util.Random;
 
 public class Deck {
 
-    public ArrayList<Card> cards= new ArrayList<>();
+    private ArrayList<Card> cards= new ArrayList<>();
 
     public Deck() {
         for (Suit s : Suit.values()) {
             for (int v= 2; v <= 14; v++ ) {
-                cards.add(new Card(s, new Value(v)));
+                cards.add(new Card(s, v));
             }
         }
     }
@@ -18,7 +18,7 @@ public class Deck {
     public Deck(Card[] exclude) {
         for (Suit s : Suit.values()) {
             for (int v= 2; v <= 14; v++ ) {
-                Card curr= new Card(s, new Value(v));
+                Card curr= new Card(s, v);
                 boolean used= false;
                 for (Card c : exclude) {
                     if (curr.equals(c)) {
@@ -32,13 +32,19 @@ public class Deck {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public Deck copy() {
         Deck copy= new Deck();
         copy.cards= (ArrayList<Card>) cards.clone();
         return copy;
     }
 
-    public void shuffle() {
+    @SuppressWarnings("unchecked")
+    public ArrayList<Card> getCards() {
+        return (ArrayList<Card>) cards.clone();
+    }
+
+    void shuffle() {
         Random rand= new Random();
         int r;
         Card temp;
@@ -50,7 +56,7 @@ public class Deck {
         }
     }
 
-    public Card deal() {
+    Card deal() {
         return cards.remove(0);
     }
 

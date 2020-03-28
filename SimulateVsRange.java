@@ -9,7 +9,7 @@ public class SimulateVsRange {
     public static void main(String[] args) {
         Card[] c1= { new Card(Suit.HEARTS, 14), new Card(Suit.DIAMONDS, 14) };
         Range r2= new Range(10);
-        r2.Remove(new HoleCards(c1));
+        r2.removeOpposing(new HoleCards(c1));
         SimulateVsRange simulation= new SimulateVsRange(new Player(c1), new RangePlayer(r2));
         int num= 100000;
         SimulatedPlayer[] results= simulation.runSimulation(num, null, true);
@@ -51,5 +51,4 @@ public class SimulateVsRange {
         playerOne= p1;
         playerTwo= p2;
     }
-
 }

@@ -7,8 +7,8 @@ public class Player implements SimulatedPlayer {
 
     public Card[] holeCards;
 
-    int wins= 0;
-    int ties= 0;
+    private int wins= 0;
+    private int ties= 0;
 
     Hand playerHand;
 
@@ -53,5 +53,15 @@ public class Player implements SimulatedPlayer {
     @Override
     public int getTies() {
         return ties;
+    }
+
+    @Override
+    public void addWins() {
+        wins++ ;
+    }
+
+    @Override
+    public void addTies() {
+        ties++ ;
     }
 }

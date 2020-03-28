@@ -2,15 +2,15 @@ package poker;
 
 public class SimulateVsHand {
 
-    public Player[] players;
+    private Player[] players;
 
-    public int numPlayers;
+    private final int numPlayers;
 
-    public Deck currDeck;
+    private Deck currDeck;
 
-    int tableLength;
+    private final int tableLength;
 
-    Card[] tableCards= new Card[5];
+    private Card[] tableCards= new Card[5];
 
     public static void main(String[] args) {
         Card[] c1= { new Card(Suit.CLUBS, 8), new Card(Suit.SPADES, 7) };
@@ -31,7 +31,7 @@ public class SimulateVsHand {
     }
 
     public Player[] runSimulation(int numSimulations, boolean printProgress) {
-        if(printProgress){
+        if (printProgress) {
             System.out.println("Simulation started");
         }
         for (int i= 0; i < numSimulations; i++ ) {
@@ -45,6 +45,7 @@ public class SimulateVsHand {
             }
             for (int j= 0; j < 5; j++ ) {
                 Card c= j >= tableLength ? copy.deal() : tableCards[j];
+                tableCards[j]= c;
                 for (Player p : players) {
                     p.playerCards.add(c);
                 }
@@ -72,17 +73,17 @@ public class SimulateVsHand {
             if (tied) {
                 for (Player p : players) {
                     if (p.playerHand.getHandValue() == maxValue) {
-                        p.ties++ ;
+                        p.addTies();
                     }
                 }
             } else {
-                winner.wins++ ;
+                winner.addWins();
             }
 
         }
-        if(printProgress) {
+        if (printProgress) {
             System.out.println("Simulation finished");
-        }      
+        }
         return players;
     }
 
