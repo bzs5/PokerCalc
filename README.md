@@ -10,7 +10,6 @@ Takes a player's pocket cards and an opponent's range of possible pocket cards. 
 
 TODO: 
 - Documentation
-- Make encapsulation adhere to java conventions
 - Experimentally determine equity of each pair pocket cards vs a pair of pocket cards 
 (needed for Range, currently using dataset from http://www.pokerhandrange.com/)
 - GUI for simulators
